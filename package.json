@@ -1,6 +1,6 @@
 {
   "name": "level-userdb-cli",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "CLI interface to databases produced by level-userdb",
   "main": "index.js",
   "scripts": {
