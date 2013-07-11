@@ -153,6 +153,7 @@ function handleCmd(cmd, db, cb) {
     db.printAllUsers()
     cb(null)
   } else if (cmd === 'edit') {
+    var path
     var user
 
     function find() {
@@ -168,8 +169,9 @@ function handleCmd(cmd, db, cb) {
       mktemp.createFile('dbajs-XXXXXX', writeFile)
     }
 
-    function writeFile(err, path) {
+    function writeFile(err, p) {
       if (err) throw err
+      path = p
       fs.writeFile(path, JSON.stringify(user.data, null, '\t'), editFile)
     }
 
