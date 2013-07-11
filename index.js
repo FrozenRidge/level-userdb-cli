@@ -106,7 +106,10 @@ function handleCmd(cmd, db, cb) {
     })
   } else if (cmd === 'retrieve') {
     db.findUser(argv.email, function(err, userObj) {
-      if (err) throw err
+      if (err) {
+        console.log("Error: %s not found", argv.email)
+        process.exit(1)
+      }
       console.log("User email: %s", argv.email)
       console.log("==============================")
       console.log("Created:\t %s", userObj.createdDate)
