@@ -119,14 +119,12 @@ function handleCmd(cmd, db, cb) {
       cb(null)
     })
   } else if (cmd === 'verify') {
-    console.log("verify")
     db.checkPassword(argv.email, argv.password, function(err, res) {
       console.log("User email: %s", argv.email)
       console.log("==============================")
       if (err) {
-        console.log("Bad password")
+        console.log("Bad password: %s", err)
         process.exit(1)
-
       }
       console.log("Good password")
       cb(null)
