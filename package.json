@@ -1,0 +1,32 @@
+{
+  "name": "level-userdb-cli",
+  "version": "0.0.0",
+  "description": "CLI interface to databases produced by level-userdb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "level-userdb-cli": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FrozenRidge/level-userdb-cli.git"
+  },
+  "keywords": [
+    "level",
+    "leveldb",
+    "userdb"
+  ],
+  "author": "Niall O'Higgins",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/FrozenRidge/level-userdb-cli/issues"
+  },
+  "dependencies": {
+    "level-userdb": "~0.1.0",
+    "editor": "0.0.4",
+    "mktemp": "~0.3.1",
+    "optimist": "~0.6.0"
+  }
+}
