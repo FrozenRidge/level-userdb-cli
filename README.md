@@ -44,6 +44,9 @@ To connect to a remote level-userdb-server instance, supply the `-r host:port` f
 
 `level-userdb-cli -r localhost:9998 -e test@example.com retrieve`
 
+
+## Supported Operations
+
 #### Adding a user
 
 `level-userdb-cli -e foo@example.com -p supersecret create`
