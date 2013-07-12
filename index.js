@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 var data = require('level-userdb')
-var dnodeClient = require('level-userdb-dnode').client
 var editor = require('editor')
 var fs = require('fs')
 var mktemp = require('mktemp')
+var multilevel = require('multilevel')
+var net = require('net')
 var ui = require('optimist')
   .usage('Usage: $0 -d [database] -r [server:port] -e [email] -p [password] <COMMAND>')
   .alias('d', 'database')
@@ -85,12 +86,11 @@ argv._.forEach(function(cmd) {
     } catch(e) {
     }
     console.log("connecting to %s:%d", host, port)
-    dnodeClient({host:host, port:port}, function(r, c) {
-      console.log("connected to %s:%d", host, port)
-      handleCmd(cmd, r, function() {
-        c.end()
-        process.exit(0)
-      })
+    var db = multilevel.client()
+    db.pipe(net.connect({port:port, host:host})).pipe(db)
+    console.log("connected to %s:%d", host, port)
+    handleCmd(cmd, data(db), function() {
+      process.exit(0)
     })
 
   }
@@ -150,8 +150,16 @@ function handleCmd(cmd, db, cb) {
       cb(null)
     })
   } else if (cmd === 'list') {
-    db.printAllUsers()
-    cb(null)
+    console.log("==========================================================================================")
+    console.log("Email \t\t\t Created At \t\t\t Modified At")
+    console.log("==========================================================================================")
+    db.createUserStream()
+      .on('data', function(user) {
+          process.stdout.write(user.email + "\t\t")
+          process.stdout.write(user.createdDate + "\t")
+          process.stdout.write(user.modifiedDate + "\n")
+      })
+      .on('end', function() { cb(null) })
   } else if (cmd === 'edit') {
     var path
     var user
