@@ -137,6 +137,13 @@ function handleCmd(cmd, db, cb) {
       console.log("Deleted.")
       cb(null)
     })
+  } else if (cmd === 'password') {
+    db.changePassword(argv.email, argv.p, function(err, res) {
+      console.log("User email: %s", argv.email)
+      console.log("==============================")
+      console.log("Password updated")
+      cb(null)
+    })
   } else if (cmd === 'email') {
     if (!argv.n) {
       console.log("you must supply a new email address with `-n <email>`")
